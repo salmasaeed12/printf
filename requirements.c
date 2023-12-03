@@ -62,3 +62,64 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 	}
 	return (poi);
 }
+/**
+ * ini_spes - Initialize array of structures with format specifiers, functions
+ *
+ * @spes: Point to the array of structures
+ * Return: void
+*/
+void ini_spes(spe **spes)
+{
+	/*Allocate for the array of structures*/
+	*spes = malloc(sizeof(spe) * 4);
+
+	if (*spes == NULL)
+		return;
+	/*Initialize array of structures with format specifiers & matching functions*/
+	(*spes)[0].spe_char = "s";
+	(*spes)[0].func = p_string;
+	(*spes)[1].spe_char = "%";
+	(*spes)[1].func = _percent;
+	(*spes)[2].spe_char = "c";
+	(*spes)[2].func = p_char;
+	(*spes)[3].spe_char = NULL;
+	(*spes)[3].func = NULL;
+
+}
+/**
+ * sbuf - Store the formatted string in buffer
+ *
+ * @f: The formtted string
+ * @pb: Pointer to buffer
+ * @buf: The buffer
+ * @size: The size of buffer
+ * @ar: Pinter to the arguments list
+ * @s: Pointer to array of structure
+ * Return: void
+*/
+void sbuf(const char *f, char *pb, char *buf, int *size, va_list *ar, spe *s)
+{
+	int len_buf, i;
+
+	for (; *f != '\0'; f++, pb++)
+	{
+		len_buf = pb - buf;
+		if (len_buf == *size - 1)
+			pb = change_len(size, pb, buf, len_buf);
+		if (*f == '%')
+		{
+			f++;
+			for (i = 0; s[i].spe_char; i++)
+				if (*f == s[i].spe_char[0])
+				{
+					pb = s[i].func(pb, ar);
+					break;
+				}
+			if (!s[i].spe_char)
+				f--;
+		}
+		else
+			*pb = *f;
+	}
+	*pb = '\0';
+}

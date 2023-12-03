@@ -36,9 +36,12 @@ int _strlen(char *str)
  */
 char *p_char(char *str, va_list *ar)
 {
-	if (*str == '\0')
-		return (str);
-	*str = va_arg(*ar, int);
+	char c;
+
+	c = va_arg(*ar, int);
+	if (c == '\0')
+		c = '\a';
+	*str = c;
 	return (str);
 }
 /**
@@ -68,42 +71,27 @@ char *p_string(char *buffer, va_list *ar)
  */
 int _printf(const char *format, ...)
 {
-	int i, len_buf, size_buf;
-	spe spes[] = {
-		{"s", p_string},
-		{"%", _percent},
-		{"c", p_char},
-		{NULL, NULL}
-	};
+	int i, size_buf;/*len_buf*/
+	spe *spes;
 	char *buffer, *ptrb;
+	const char *ptrf;
 	va_list ar;
 
+	ptrf = format;
 	if (!format)
 		return (0);
+
 	size_buf = 1024;
 	buffer = malloc(sizeof(char)  *  size_buf);
 	if (buffer == NULL)
 		return (0);
 	ptrb = buffer;
 	va_start(ar, format);
-	for (; *format != '\0'; format++, ptrb++)
-	{
-		len_buf = ptrb - buffer;
-		if (len_buf == size_buf - 1)
-			ptrb = change_len(&size_buf, ptrb, buffer, len_buf);
-		if (*format == '%')
-		{
-			format++;
-			for (i = 0; spes[i].spe_char; i++)
-				if (*format == spes[i].spe_char[0])
-					ptrb = spes[i].func(ptrb, &ar);
-		}
-		else
-			*ptrb = *format;
-	}
-	*ptrb = '\0';
+	ini_spes(&spes);/*Initialize the structure*/
+	sbuf(ptrf, ptrb, buffer, &size_buf, &ar, spes);/*Store in the buffer*/
 	write(1, buffer, i = _strlen(buffer));
 	va_end(ar);
+	free(spes);
 	free(buffer);
 	return (i);
 }

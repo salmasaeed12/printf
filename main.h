@@ -24,5 +24,6 @@ int _strlen(char *str);
 int _printf(const char *format, ...);
 char *p_char(char *str, va_list *ar);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
-
+void ini_spes(spe **spes);
+void sbuf(const char *f, char *pb, char *buf, int *size, va_list *ar, spe *s);
 #endif/*endif*/
