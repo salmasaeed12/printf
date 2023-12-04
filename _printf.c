@@ -12,6 +12,9 @@
  */
 char *_percent(char *pb, va_list *ar, int *size, char **buf, int len_buf)
 {
+	(void)(size);
+	(void)(buf);
+	(void)(len_buf);
 	*pb = '%';
 	(void)(ar);
 	return (pb);
@@ -44,6 +47,9 @@ char *p_char(char *pb, va_list *ar, int *size, char **buf, int len_buf)
 {
 	char c;
 
+	(void)(size);
+	(void)(buf);
+	(void)(len_buf);
 	c = va_arg(*ar, int);
 	if (c == '\0')
 		c = '\a';
