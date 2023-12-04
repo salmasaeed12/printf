@@ -84,8 +84,10 @@ void ini_spes(spe **spes)
 	(*spes)[2].func = p_char;
 	(*spes)[3].spe_char = "d";
 	(*spes)[3].func = store_int;
-	(*spes)[4].spe_char = NULL;
-	(*spes)[4].func = NULL;
+	(*spes)[4].spe_char = "i";
+	(*spes)[4].func = store_int;
+	(*spes)[5].spe_char = NULL;
+	(*spes)[5].func = NULL;
 
 }
 /**

@@ -23,7 +23,7 @@ void store_dec(int n, char **pb, char **buf, int *size)
 	}
 	if (nl / 10 != 0)
 	{
-		print_number(nl / 10, pb, buf, size);
+		store_dec(nl / 10, pb, buf, size);
 	}
 	**pb = ((nl % 10) + '0');
 	(*pb)++;
@@ -45,6 +45,7 @@ char *store_int(char *pb, va_list *ar, int *size, char **buf, int len_buf)
 {
 	int n;
 
+	(void)(len_buf);
 	n = va_arg(*ar, int);
 	store_dec(n, &pb, buf, size);
 	return (--pb);
