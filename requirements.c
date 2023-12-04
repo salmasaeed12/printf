@@ -9,15 +9,15 @@
  * @len_buf: The length
  * Return: The new space
 */
-char *change_len(int *size_buf, char *pb, char *buffer, int len_buf)
+char *change_len(int *size_buf, char *pb, char **buffer, int len_buf)
 {
 	int j;
 
 	j = *size_buf;
-	buffer = _realloc(buffer, j, *size_buf = 1024 + *size_buf);
-	if (buffer == NULL)
+	*buffer = _realloc((void **)buffer, j, *size_buf = 1024 + *size_buf);
+	if (*buffer == NULL)
 		return (NULL);
-	pb = buffer + len_buf;
+	pb = *buffer + len_buf;
 	return (pb);
 }
 /**
@@ -28,7 +28,7 @@ char *change_len(int *size_buf, char *pb, char *buffer, int len_buf)
  * @new_size: the new_size of the block
  * Return: the new block
 */
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
+void *_realloc(void **ptr, unsigned int old_size, unsigned int new_size)
 {
 	void *poi;
 	unsigned int j;
@@ -46,19 +46,19 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 		if (new_size > old_size)
 		{
 			for (j = 0; j < old_size; j++)
-				*((char *)poi + j) = *((char *)ptr + j);
+				*((char *)poi + j) = *((char *)*ptr + j);
 		}
 		if (new_size < old_size)
 		{
 			for (j = 0; j < new_size; j++)
-				*((char *)poi + j) = *((char *)ptr + j);
+				*((char *)poi + j) = *((char *)*ptr + j);
 		}
 		if (new_size == old_size)
 		{
 			free(poi);
-			return (ptr);
+			return (*ptr);
 		}
-		free(ptr);
+		free(*ptr);
 	}
 	return (poi);
 }
@@ -95,31 +95,37 @@ void ini_spes(spe **spes)
  * @size: The size of buffer
  * @ar: Pinter to the arguments list
  * @s: Pointer to array of structure
- * Return: void
+ * Return: int
 */
-void sbuf(const char *f, char *pb, char *buf, int *size, va_list *ar, spe *s)
+int sbuf(const char *f, char *pb, char **buf, int *size, va_list *ar, spe **s)
 {
 	int len_buf, i;
 
 	for (; *f != '\0'; f++, pb++)
 	{
-		len_buf = pb - buf;
+		len_buf = pb - *buf;
 		if (len_buf == *size - 1)
 			pb = change_len(size, pb, buf, len_buf);
 		if (*f == '%')
 		{
 			f++;
-			for (i = 0; s[i].spe_char; i++)
-				if (*f == s[i].spe_char[0])
+			for (i = 0; (*s)[i].spe_char; i++)
+				if (*f == (*s)[i].spe_char[0])
 				{
-					pb = s[i].func(pb, ar);
+					pb = (*s)[i].func(pb, ar, size, buf, len_buf);
 					break;
 				}
-			if (!s[i].spe_char)
-				f--;
+			if (!(*s)[i].spe_char && *f != '\0')
+			{
+				*pb = *(--f);
+				*(++pb) = *(++f);
+			}
+			else if (*f == '\0')
+				return (-1);
 		}
 		else
 			*pb = *f;
 	}
 	*pb = '\0';
+	return (0);
 }

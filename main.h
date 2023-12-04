@@ -17,13 +17,13 @@ typedef struct special
 	char *spe_char;
 	char *(*func)();
 } spe;
-char *change_len(int *size_buf, char *pb, char *buffer, int len_buf);
-char *p_string(char *buffer, va_list *ar);
-char *_percent(char *str, va_list *ar);
+char *change_len(int *size_buf, char *pb, char **buffer, int len_buf);
+char *p_string(char *pb, va_list *ar, int *size, char **buf, int len_buf);
+char *_percent(char *pb, va_list *ar, int *size, char **buf, int len_buf);
 int _strlen(char *str);
 int _printf(const char *format, ...);
-char *p_char(char *str, va_list *ar);
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+char *p_char(char *pb, va_list *ar, int *size, char **buf, int len_buf);
+void *_realloc(void **ptr, unsigned int old_size, unsigned int new_size);
 void ini_spes(spe **spes);
-void sbuf(const char *f, char *pb, char *buf, int *size, va_list *ar, spe *s);
+int sbuf(const char *f, char *pb, char **buf, int *size, va_list *ar, spe **s);
 #endif/*endif*/

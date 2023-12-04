@@ -3,15 +3,18 @@
 /**
  * _percent - Print the percent
  *
- * @str: The address of cuurent buffer
+ * @pb: Pointer to buffer
  * @ar: The list of arguments
- * Return: The current address
+ * @size: pointer to size
+ * @buf: Pointer to buffer
+ * @len_buf: Check if buffer is full or not
+ * Return: the next address
  */
-char *_percent(char *str, va_list *ar)
+char *_percent(char *pb, va_list *ar, int *size, char **buf, int len_buf)
 {
-	*str = '%';
+	*pb = '%';
 	(void)(ar);
-	return (str);
+	return (pb);
 }
 /**
  * _strlen - Calculate the length
@@ -30,38 +33,48 @@ int _strlen(char *str)
 /**
  * p_char - Store a character in buffer
  *
- * @str: The buffer
+ * @pb: Pointer to buffer
  * @ar: The list of arguments
- * Return: the current address
+ * @size: pointer to size
+ * @buf: Pointer to buffer
+ * @len_buf: Check if buffer is full or not
+ * Return: the next address
  */
-char *p_char(char *str, va_list *ar)
+char *p_char(char *pb, va_list *ar, int *size, char **buf, int len_buf)
 {
 	char c;
 
 	c = va_arg(*ar, int);
 	if (c == '\0')
 		c = '\a';
-	*str = c;
-	return (str);
+	*pb = c;
+	return (pb);
 }
 /**
  * p_string - Store a string
  *
- * @buffer: The buffer
+ * @pb: Pointer to buffer
  * @ar: The list of arguments
+ * @size: pointer to size
+ * @buf: Pointer to buffer
+ * @len_buf: Check if buffer is full or not
  * Return: the next address
  */
-char *p_string(char *buffer, va_list *ar)
+char *p_string(char *pb, va_list *ar, int *size, char **buf, int len_buf)
 {
 	char *str;
-	int i;
 
 	str = va_arg(*ar, char *);
 	if (str == NULL)
 		str = "(null)";
-	for (i = 0; str[i] != '\0'; i++)
-		buffer[i] = str[i];
-	return (&buffer[i - 1]);
+	for (; *str != '\0'; str++, pb++)
+	{
+		len_buf = pb - *buf;/*To check if the buffer is full*/
+		if (len_buf == *size - 1)
+			pb = change_len(size, pb, buf, len_buf);
+		*pb = *str;
+	}
+	return (--pb);
 }
 /**
  * _printf - like printf
@@ -71,7 +84,7 @@ char *p_string(char *buffer, va_list *ar)
  */
 int _printf(const char *format, ...)
 {
-	int i, size_buf;/*len_buf*/
+	int i, j, size_buf;
 	spe *spes;
 	char *buffer, *ptrb;
 	const char *ptrf;
@@ -79,7 +92,7 @@ int _printf(const char *format, ...)
 
 	ptrf = format;
 	if (!format)
-		return (0);
+		return (-1);
 
 	size_buf = 1024;
 	buffer = malloc(sizeof(char)  *  size_buf);
@@ -88,7 +101,9 @@ int _printf(const char *format, ...)
 	ptrb = buffer;
 	va_start(ar, format);
 	ini_spes(&spes);/*Initialize the structure*/
-	sbuf(ptrf, ptrb, buffer, &size_buf, &ar, spes);/*Store in the buffer*/
+	j = sbuf(ptrf, ptrb, &buffer, &size_buf, &ar, &spes);/*Store in the buffer*/
+	if (j == -1)
+		return (-1);
 	write(1, buffer, i = _strlen(buffer));
 	va_end(ar);
 	free(spes);
