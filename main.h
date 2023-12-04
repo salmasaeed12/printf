@@ -26,4 +26,6 @@ char *p_char(char *pb, va_list *ar, int *size, char **buf, int len_buf);
 void *_realloc(void **ptr, unsigned int old_size, unsigned int new_size);
 void ini_spes(spe **spes);
 int sbuf(const char *f, char *pb, char **buf, int *size, va_list *ar, spe **s);
+char *store_int(char *pb, va_list *ar, int *size, char **buf, int len_buf);
+void store_dec(int n, char **pb, char **buf, int *size);
 #endif/*endif*/
