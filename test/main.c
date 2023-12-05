@@ -11,8 +11,8 @@ int main(void)
 {
 	int len, len2;
 
-	len = _printf("%d", -1024);
-	len2 = printf("%d", -1024);
+	len2 = printf("%d", 123);
+	len = _printf("%d", 123);
 	fflush(stdout);
 	if (len != len2)
 	{
