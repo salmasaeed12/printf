@@ -71,7 +71,7 @@ void *_realloc(void **ptr, unsigned int old_size, unsigned int new_size)
 void ini_spes(spe **spes)
 {
 	/*Allocate for the array of structures*/
-	*spes = malloc(sizeof(spe) * 4);
+	*spes = malloc(sizeof(spe) * 9);
 
 	if (*spes == NULL)
 		return;
@@ -83,11 +83,19 @@ void ini_spes(spe **spes)
 	(*spes)[2].spe_char = "c";
 	(*spes)[2].func = p_char;
 	(*spes)[3].spe_char = "d";
-	(*spes)[3].func = store_int;
+	(*spes)[3].func = print_int;
 	(*spes)[4].spe_char = "i";
-	(*spes)[4].func = store_int;
-	(*spes)[5].spe_char = NULL;
-	(*spes)[5].func = NULL;
+	(*spes)[4].func = print_int;
+	(*spes)[5].spe_char = "u";
+	(*spes)[5].func = print_unit;
+	(*spes)[6].spe_char = "o";
+	(*spes)[6].func = print_unit;
+	(*spes)[7].spe_char = "x";
+	(*spes)[7].func = print_unit;
+	(*spes)[8].spe_char = "X";
+	(*spes)[8].func = print_unit;
+	(*spes)[9].spe_char = NULL;
+	(*spes)[9].func = NULL;
 
 }
 /**

@@ -52,7 +52,7 @@ return (0);
  * @buffer_size: Pointer to the size of the buffer.
  * Return: None.
  */
-int print_int(va_list args, char *buffer, int *buffer_index, int *buffer_size)
+int *print_int(va_list args, char *buffer, int *buffer_index, int *buffer_size)
 {
 int num = va_arg(args, int);
 write_integer(&buffer, buffer_index, num, 10, buffer_size);
@@ -68,7 +68,7 @@ write_integer(&buffer, buffer_index, num, 10, buffer_size);
  * @spe_char: Format specifier character ('o', 'u', 'x', etc.).
  * Return: None.
  */
-void print_uint(va_list args, char *buffer, int *buffer_index,
+void *print_uint(va_list args, char *buffer, int *buffer_index,
 int *buffer_size, char spe_char)
 {
 unsigned int num = va_arg(args, unsigned int);
