@@ -21,6 +21,11 @@ char *change_len(int *size_buf, char *pb, char **buffer, int len_buf);
 char *p_string(char *pb, va_list *ar, int *size, char **buf, int len_buf);
 char *_percent(char *pb, va_list *ar, int *size, char **buf, int len_buf);
 int _strlen(char *str);
+void check_case(int *buffer_index, int *buffer_size, char **buffer,
+const char *format, va_list *args);
+void write_integer(char **buffer, int *index, long num, int base, int *size);
+void write_char(char **buffer, int *index, char c, int *size);
+void write_string(char **buffer, int *index, const char *str, int *size);
 int _printf(const char *format, ...);
 char *p_char(char *pb, va_list *ar, int *size, char **buf, int len_buf);
 void *_realloc(void **ptr, unsigned int old_size, unsigned int new_size);
