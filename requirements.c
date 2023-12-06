@@ -72,6 +72,7 @@ void ini_spes(spe **spes)
 {
 	/*Allocate for the array of structures*/
 	*spes = malloc(sizeof(spe) * 6);
+
 	if (*spes == NULL)
 		return;
 	/*Initialize array of structures with format specifiers & matching functions*/
@@ -82,9 +83,17 @@ void ini_spes(spe **spes)
 	(*spes)[2].spe_char = "c";
 	(*spes)[2].func = p_char;
 	(*spes)[3].spe_char = "d";
-	(*spes)[3].func = store_int;
+	(*spes)[3].func = pp_int;
 	(*spes)[4].spe_char = "i";
-	(*spes)[4].func = store_int;
+	(*spes)[4].func = pp_int;
+	/*(*spes)[5].spe_char = "u";
+	(*spes)[5].func = print_uint;
+	(*spes)[6].spe_char = "o";
+	(*spes)[6].func = print_uint;
+	(*spes)[7].spe_char = "x";
+	(*spes)[7].func = print_uint;
+	(*spes)[8].spe_char = "X";
+	(*spes)[8].func = print_uint;*/
 	(*spes)[5].spe_char = NULL;
 	(*spes)[5].func = NULL;
 
