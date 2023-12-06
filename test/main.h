@@ -24,8 +24,12 @@ int _strlen(char *str);
 void write_integer(char **buffer, int *index, long num, int base, int *size);
 void write_char(char **buffer, int *index, char c, int *size);
 void write_string(char **buffer, int *index, const char *str, int *size);
-void print_uint(va_list args, char *buffer, int *buffer_index,
-int *buffer_size, char spe_char);
+void print_uinto(va_list args, char *buffer, int *buffer_index,
+int *buffer_size);
+void print_uintu(va_list args, char *buffer, int *buffer_index,
+int *buffer_size);
+void print_uintx(va_list args, char *buffer, int *buffer_index,
+int *buffer_size);
 void print_int(va_list args, char *buffer, int *buffer_index,
 int *buffer_size);
 int _printf(const char *format, ...);
@@ -36,4 +40,12 @@ int sbuf(const char *f, char *pb, char **buf, int *size, va_list *ar, spe **s);
 char *store_int(char *pb, va_list *ar, int *size, char **buf, int len_buf);
 void store_dec(int n, char **pb, char **buf, int *size);
 char *pp_int(char *pb, va_list *ar, int *size, char **buf, int len_buf);
+char *pp_o(char *pb, va_list *ar, int *size, char **buf, int len_buf);
+char *pp_u(char *pb, va_list *ar, int *size, char **buf, int len_buf);
+char *pp_x(char *pb, va_list *ar, int *size, char **buf, int len_buf);
+char *pp_X(char *pb, va_list *ar, int *size, char **buf, int len_buf);
+void print_uintX(va_list args, char *buffer, int *buffer_index,
+int *buffer_size);
+void write_integerX(char **buffer, int *index, long num, int base, int *size);
+
 #endif/*endif*/

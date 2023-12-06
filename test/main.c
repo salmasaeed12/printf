@@ -11,9 +11,9 @@ int main(void)
 {
 	int len, len2;
 
-	len2 = printf("good%d%s%dgood", 123456789, "Tariq", 123);
+	len2 = printf("%X", 123);
 	printf("\n\n");
-	len = _printf("good%d%s%dgood", 123456789, "Tariq", 123);
+	len = _printf("%X", 123);
 	fflush(stdout);
 	if (len != len2)
 	{

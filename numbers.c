@@ -1,52 +1,109 @@
 #include "main.h"
-
 /**
- * store_dec - print number
+ * print_uint -prints an unsigned integer
+ *    to the buffer based on the specified format.
  *
- * @n: the number
- * @pb: Point to buffer
- * @buf: The buffer
- * @size: The size of buffer
- * Return: void
+ * @args: Variable argument list.
+ * @buffer: Pointer to the buffer.
+ * @buffer_index: Pointer to the current index in the buffer.
+ * @buffer_size: Pointer to the size of the buffer.
+ * @spe_char: Format specifier character ('o', 'u', 'x', etc.).
+ * Return: None.
  */
-void store_dec(int n, char **pb, char **buf, int *size)
+void print_uinto(va_list args, char *buffer, int *buffer_index,
+int *buffer_size)
 {
-	int nl;
-	int len_buf;
+	unsigned int num = va_arg(args, unsigned int);
 
-	nl = n;
-	if (n < 0)
-	{
-		(**pb) = '-';
-		nl = -n;
-		(*pb)++;
-	}
-	if (nl / 10 != 0)
-	{
-		store_dec(nl / 10, pb, buf, size);
-	}
-	**pb = ((nl % 10) + '0');
-	(*pb)++;
-	len_buf = *pb - *buf;/*To check if the buffer is full*/
-		if (len_buf == *size - 1)
-			*pb = change_len(size, *pb, buf, len_buf);
+	write_integer(&buffer, buffer_index, num, 8, buffer_size);
 }
 /**
- * store_int - Store int to buffer
+ * print_uint -prints an unsigned integer
+ *    to the buffer based on the specified format.
  *
- * @pb: Pointer to buffer
- * @ar: The list of arguments
- * @size: pointer to size
- * @buf: Pointer to buffer
- * @len_buf: Check if buffer is full or not
- * Return: the next address
+ * @args: Variable argument list.
+ * @buffer: Pointer to the buffer.
+ * @buffer_index: Pointer to the current index in the buffer.
+ * @buffer_size: Pointer to the size of the buffer.
+ * @spe_char: Format specifier character ('o', 'u', 'x', etc.).
+ * Return: None.
  */
-char *store_int(char *pb, va_list *ar, int *size, char **buf, int len_buf)
+void print_uintu(va_list args, char *buffer, int *buffer_index,
+int *buffer_size)
 {
-	int n;
+	unsigned int num = va_arg(args, unsigned int);
 
-	(void)(len_buf);
-	n = va_arg(*ar, int);
-	store_dec(n, &pb, buf, size);
-	return (--pb);
+	write_integer(&buffer, buffer_index, num, 10, buffer_size);
+}
+/**
+ * print_uint -prints an unsigned integer
+ *    to the buffer based on the specified format.
+ *
+ * @args: Variable argument list.
+ * @buffer: Pointer to the buffer.
+ * @buffer_index: Pointer to the current index in the buffer.
+ * @buffer_size: Pointer to the size of the buffer.
+ * @spe_char: Format specifier character ('o', 'u', 'x', etc.).
+ * Return: None.
+ */
+void print_uintx(va_list args, char *buffer, int *buffer_index,
+int *buffer_size)
+{
+	unsigned int num = va_arg(args, unsigned int);
+
+	write_integer(&buffer, buffer_index, num, 16, buffer_size);
+}
+/**
+ * print_uintX -prints an unsigned integer
+ *    to the buffer based on the specified format.
+ *
+ * @args: Variable argument list.
+ * @buffer: Pointer to the buffer.
+ * @buffer_index: Pointer to the current index in the buffer.
+ * @buffer_size: Pointer to the size of the buffer.
+ * @spe_char: Format specifier character ('o', 'u', 'x', etc.).
+ * Return: None.
+ */
+void print_uintX(va_list args, char *buffer, int *buffer_index,
+int *buffer_size)
+{
+	unsigned int num = va_arg(args, unsigned int);
+
+	write_integerX(&buffer, buffer_index, num, 16, buffer_size);
+}
+/**
+ * write_integerX -  Writes an integer to the buffer.
+ *
+ * @buffer: Pointer to the buffer.
+ * @index: Pointer to the current index in the buffer.
+ * @num: Integer to write.
+ * @base: Base for conversion (e.g., 10 for decimal).
+ * @size: Pointer to the size of the buffer.
+ */
+void write_integerX(char **buffer, int *index, long num, int base, int *size)
+{
+	char temp[20];
+	int i = 0;
+
+	if (num == 0)
+	{
+		write_char(buffer, index, '0', size);
+		return;
+	}
+	if (num < 0)
+	{
+		write_char(buffer, index, '-', size);
+		num = -num;
+	}
+	while (num > 0)
+	{
+		int digit = num % base;
+
+		temp[i++] = (digit < 10) ? digit + '0' : digit - 10 + 'A';/*e*/
+		num /= base;
+	}
+	while (i > 0)
+	{
+		write_char(buffer, index, temp[--i], size);
+	}
 }
