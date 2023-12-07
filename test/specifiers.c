@@ -143,13 +143,14 @@ char *p_sstring(char *pb, va_list *ar, int *size, char **buf, int len_buf)
 	int i;
 	char *s;
 
+	(void)(len_buf);
 	s = va_arg(*ar, char *);
 	for (; *s != '\0'; s++, pb++)
 	{
 		i = pb - *buf;
 		if (i == *size)
 			pb = change_len(size, pb, buf, i);
-		if (*s > 0 && *s < 32 || *s >= 127)
+		if ((*s > 0 && *s < 32) || *s >= 127)
 		{
 			write_char(buf, &i, '\\', size);
 			write_char(buf, &i, 'x', size);
