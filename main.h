@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
+
 /**
  * struct special - the selector struct
  * @spe_char: The special character
@@ -47,5 +48,6 @@ char *pp_X(char *pb, va_list *ar, int *size, char **buf, int len_buf);
 void print_uintX(va_list args, char *buffer, int *buffer_index,
 int *buffer_size);
 void write_integerX(char **buffer, int *index, long num, int base, int *size);
+char *p_sstring(char *pb, va_list *ar, int *size, char **buf, int len_buf);
 
 #endif/*endif*/

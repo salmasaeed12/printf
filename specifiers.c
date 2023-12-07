@@ -128,3 +128,38 @@ void write_char(char **buffer, int *index, char c, int *size)
 	(*buffer)[(*index)++] = c;
 	/*(*buffer)[*index] = '\0';e*/
 }
+/**
+ * p_sstring - Store a string, Non printable characters replaced by (\x(hexa))
+ *
+ * @pb: Pointer to buffer
+ * @ar: The list of arguments
+ * @size: pointer to size
+ * @buf: Pointer to buffer
+ * @len_buf: Check if buffer is full or not
+ * Return: the next address
+ */
+char *p_sstring(char *pb, va_list *ar, int *size, char **buf, int len_buf)
+{
+	int i;
+	char *s;
+
+	s = va_arg(*ar, char *);
+	for (; *s != '\0'; s++, pb++)
+	{
+		i = pb - *buf;
+		if (i == *size)
+			pb = change_len(size, pb, buf, i);
+		if (*s > 0 && *s < 32 || *s >= 127)
+		{
+			write_char(buf, &i, '\\', size);
+			write_char(buf, &i, 'x', size);
+			if (*s < 16)
+				write_char(buf, &i, '0', size);
+			write_integerX(buf, &i, *s, 16, size);
+			pb = i - 1 + *buf;
+		}
+		else
+			*pb = *s;
+	}
+	return (--pb);
+}
