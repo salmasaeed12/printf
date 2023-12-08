@@ -7,7 +7,6 @@
  * @buffer: Pointer to the buffer.
  * @buffer_index: Pointer to the current index in the buffer.
  * @buffer_size: Pointer to the size of the buffer.
- * @spe_char: Format specifier character ('o', 'u', 'x', etc.).
  * Return: None.
  */
 void print_uintb(va_list args, char *buffer, int *buffer_index,
@@ -35,4 +34,42 @@ char *pp_b(char *pb, va_list *ar, int *size, char **buf, int len_buf)
 	(void)(len_buf);
 	print_uintb(*ar/*e*/, *buf/*e*/, &buffer_index/*e*/, size);
 	return ((buffer_index - 1) + *buf);
+}
+/**
+ * p_generic_pointer - Handles the printing of a
+ *    generic pointer in a formatted string.
+ * @pb: Pointer to the current position in the buffer.
+ * @ar: Pointer to the variable arguments list.
+ * @size: Pointer to the size of the buffer.
+ * @buf: Pointer to the buffer.
+ * @len_buf: Length of the current buffer content.
+ *
+ * This function interprets the
+ *  generic pointer provided as an array of bytes and
+ * copies each byte to the buffer.
+ *   It ensures proper buffer handling and resizing
+ * to prevent buffer overflow.
+ *
+ * Return: Pointer to the updated buffer position.
+ */
+char *p_generic_pointer(char *pb, va_list *ar, int *size,
+char **buf, int len_buf)
+{
+void *ptr = va_arg(*ar, void *);
+int i;
+
+if (ptr == NULL)
+{
+return (pb);
+}
+char *byte_ptr = (char *)ptr;
+for (i = 0; i < _strlen(byte_ptr); ++i)
+{
+len_buf = pb - *buf;
+if (len_buf == *size - 1)
+pb = change_len(size, pb, buf, len_buf);
+*pb = *(byte_ptr + i);
+++pb;
+}
+return (--pb);
 }
