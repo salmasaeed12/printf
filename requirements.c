@@ -14,7 +14,7 @@ char *change_len(int *size_buf, char *pb, char **buffer, int len_buf)
 	int j;
 
 	j = *size_buf;
-	*buffer = _realloc((void **)buffer, j, *size_buf *= 2);
+	*buffer = _realloc((void **)buffer, j, *size_buf = 2 * *size_buf);
 	if (*buffer == NULL)
 		return (NULL);
 	pb = *buffer + len_buf;
