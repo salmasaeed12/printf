@@ -90,7 +90,7 @@ char *p_string(char *pb, va_list *ar, int *size, char **buf, int len_buf)
  */
 int _printf(const char *format, ...)
 {
-	int i, j, size_buf;
+	int i, j;
 	spe *spes;
 	char *buffer, *ptrb;
 	const char *ptrf;
@@ -98,9 +98,8 @@ int _printf(const char *format, ...)
 
 	ptrf = format;
 	if (!format)
-		return (-1);
+	return (-1);
 
-	size_buf = 1024;
 	buffer = malloc(sizeof(char)  *  size_buf);
 	if (buffer == NULL)
 		return (0);
