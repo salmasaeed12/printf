@@ -71,7 +71,7 @@ void *_realloc(void **ptr, unsigned int old_size, unsigned int new_size)
 void ini_spes(spe **spes)
 {
 	/*Allocate for the array of structures*/
-	*spes = malloc(sizeof(spe) * 11);
+	*spes = malloc(sizeof(spe) * 12);
 
 	if (*spes == NULL)
 		return;
@@ -96,8 +96,10 @@ void ini_spes(spe **spes)
 	(*spes)[8].func = pp_X;
 	(*spes)[9].spe_char = "S";
 	(*spes)[9].func = p_sstring;
-	(*spes)[10].spe_char = NULL;
-	(*spes)[10].func = NULL;
+	(*spes)[10].spe_char = "b";
+	(*spes)[10].func = pp_b;
+	(*spes)[11].spe_char = NULL;
+	(*spes)[11].func = NULL;
 }
 /**
  * sbuf - Store the formatted string in buffer
