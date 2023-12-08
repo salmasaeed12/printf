@@ -52,7 +52,6 @@ char *p_char(char *pb, va_list *ar, int *size, char **buf, int len_buf)
 	(void)(len_buf);
 	c = va_arg(*ar, int);
 	if (c == '\0')
-		c = '\a';
 	*pb = c;
 	return (pb);
 }
