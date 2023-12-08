@@ -53,23 +53,25 @@ char *pp_b(char *pb, va_list *ar, int *size, char **buf, int len_buf)
  * Return: Pointer to the updated buffer position.
  */
 char *p_generic_pointer(char *pb, va_list *ar, int *size,
-char **buf, int len_buf)
+char **buf, int len_buf __attribute__((unused)))
 {
-void *ptr = va_arg(*ar, void *);
+void *ptr;
+char *byte_ptr;
 int i;
+ptr = va_arg(*ar, void *);
 
 if (ptr == NULL)
 {
 return (pb);
 }
-char *byte_ptr = (char *)ptr;
+byte_ptr = (char *)ptr;
 for (i = 0; i < _strlen(byte_ptr); ++i)
 {
-len_buf = pb - *buf;
+len_buf = *buf - pb;
 if (len_buf == *size - 1)
 pb = change_len(size, pb, buf, len_buf);
 *pb = *(byte_ptr + i);
 ++pb;
 }
-return (--pb);
+return (pb);
 }

@@ -52,5 +52,5 @@ char *p_sstring(char *pb, va_list *ar, int *size, char **buf, int len_buf);
 void print_uintb(va_list args, char *buffer, int *buffer_index,
 int *buffer_size);
 char *pp_b(char *pb, va_list *ar, int *size, char **buf, int len_buf);
-char *p_generic_pointer(char *pb, va_list *ar, int *size, char **buf, int len_buf)
+char *p_generic_pointer(char *pb, va_list *ar, int *size, char **buf, int len_buf __attribute__((unused)));
 #endif/*endif*/
