@@ -90,12 +90,12 @@ char *p_string(char *pb, va_list *ar, int *size, char **buf, int len_buf)
  */
 int _printf(const char *format, ...)
 {
-	int i, j;
+	int i, j, size_buf;
 	spe *spes;
 	char *buffer, *ptrb;
 	const char *ptrf;
 	va_list ar;
-
+        size_buf = 1024;
 	ptrf = format;
 	if (!format)
 	return (-1);

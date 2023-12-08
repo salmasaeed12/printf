@@ -1,6 +1,5 @@
 #ifndef MAIN_H
 #define MAIN_H
-#define size_buf 1024
 #include <limits.h>
 #include <unistd.h>
 #include <stdio.h>
