@@ -49,5 +49,7 @@ void print_uintX(va_list args, char *buffer, int *buffer_index,
 int *buffer_size);
 void write_integerX(char **buffer, int *index, long num, int base, int *size);
 char *p_sstring(char *pb, va_list *ar, int *size, char **buf, int len_buf);
-
+void print_uintb(va_list args, char *buffer, int *buffer_index,
+int *buffer_size);
+char *pp_b(char *pb, va_list *ar, int *size, char **buf, int len_buf);
 #endif/*endif*/
