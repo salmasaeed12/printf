@@ -82,7 +82,7 @@ int *buffer_size)
  */
 void write_integerX(char **buffer, int *index, long num, int base, int *size)
 {
-	char temp[20];
+	char temp[100];
 	int i = 0;
 
 	if (num == 0)
